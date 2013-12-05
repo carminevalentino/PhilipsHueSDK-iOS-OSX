@@ -385,7 +385,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/310049919/Projects/iOS-QuickStartApp",
+					../,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HueQuickStartApp-iOS/HueQuickStartApp-iOS-Prefix.pch";
@@ -412,7 +412,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/310049919/Projects/iOS-QuickStartApp",
+					../,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HueQuickStartApp-iOS/HueQuickStartApp-iOS-Prefix.pch";
