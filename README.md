@@ -18,6 +18,10 @@ Documentation is provided in documents such as this, other media, and code comme
 
 ###The Sample App
 The Sample App is provided to show the usage of the Hue SDK. It uses the Wizards and the Hue SDK API. It is kept deliberately simple and focuses on how to use the Hue SDK.
+Since 	 1.1.1beta the Sample App is obsolete and replaced by the QuickStartApp.
+
+###The QuickStart App for iOS/OSX
+The QuickStart App contains minimal functionality to connect to a bridge and for getting started. Ideal for devs to start programming their Hue Apps.
 
 How to structure your app for the Hue SDK
 ---------------------------------------------------------
@@ -42,12 +46,15 @@ The Heartbeat runs at regular intervals in the SDK and each interval the latest 
 The Bridge keeps itself in sync with the lights and the Bridge Resources Cache is a copy of the last read setting.
 The app should read the Bridge Resources Cache objects to get the latest settings for lights, schedules etc.
 ###Notifications
-iOS Notifications are used by the SDK. The App can receive notifications as events occur
+Notifications are used by the SDK. The App can receive notifications as events occur
 The 1-2-3 Quick Start for your SDK app
 -----------------------------------------------------
 1. Connect the SDK to the Bridge and Find Lights
 2. Send commands via the Bridge Send API
 3. Read the Bridge Resources Cache to see current light settings.
+
+###Linker flags
+Please make sure you have added -ObjC to your linker flags
 
 
 Hue SDK Components
@@ -104,6 +111,7 @@ The Wizards are supplied as source code components that use the SDK. You may ada
     /***************************************************
      The Hue SDK is created as a property in the App delegate .h file
      (@property (nonatomic, strong) PHHueSDK *phHueSDK;)
+     (@property (nonatomic, strong) PHBridgeSearching *bridgeSearching;)
      
      and the SDK instance can then be created:
      // Create sdk instance
@@ -140,6 +148,8 @@ The Wizards are supplied as source code components that use the SDK. You may ada
     The local heartbeat is a regular  timer event in the SDK. Once enabled the SDK regular collects the current state of resources managed
      by the bridge into the Bridge Resources Cache
      *****************************************************/
+
+    self.bridgeSearching = [[PHBridgeSearching alloc] initWithUpnpSearch:YES andPortalSearch:YES andIpAdressSearch:NO];
     
     [self enableLocalHeartbeat];
     
@@ -209,11 +219,12 @@ The Wizards are supplied as source code components that use the SDK. You may ada
     }
 
     #pragma mark - Bridge searching and selection
-```
+  
 
-**We use UPnP to find local bridges** 
+**We use UPnP/NUPnP/IP scan to find local bridges**
 
-```objc    
+**The PHBridgeSearching class instance should be retained, because searching for bridges will be handled in the background.**
+   
     /**
      Search for bridges using UPnP and portal discovery, shows results to user or gives error when none found.
      */
@@ -228,8 +239,7 @@ The Wizards are supplied as source code components that use the SDK. You may ada
      *****************************************************/
     
     // Start search
-    PHBridgeSearching *bridgeSearch = [[PHBridgeSearching alloc] initWithUpnpSearch:YES andPortalSearch:YES];
-    [bridgeSearch startSearchWithCompletionHandler:^(NSDictionary *bridgesFound) {
+    [self.bridgeSearching startSearchWithCompletionHandler:^(NSDictionary *bridgesFound) {
         // Done with search, remove loading view
         [self removeLoadingView];
         /***************************************************
@@ -703,9 +713,7 @@ Showing and setting an individual light state**
      light. This method creates it from the current
      user interface settings for the light
      *****************************************************/
-    
-    
-    
+        
     // Create an empty lightstate
     PHLightState *lightState = [[PHLightState alloc] init];
     
