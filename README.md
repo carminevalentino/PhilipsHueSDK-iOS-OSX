@@ -20,7 +20,7 @@ Documentation is provided in documents such as this, other media, and code comme
 The Sample App is provided to show the usage of the Hue SDK. It uses the Wizards and the Hue SDK API. It is kept deliberately simple and focuses on how to use the Hue SDK.
 Since 	 1.1.1beta the Sample App is obsolete and replaced by the QuickStartApp.
 
-###The QuickStart App for iOS/OSX
+###The QuickStart App for iOS/OS X
 The QuickStart App contains minimal functionality to connect to a bridge and for getting started. Ideal for devs to start programming their Hue Apps.
 
 How to structure your app for the Hue SDK
